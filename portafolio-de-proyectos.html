@@ -1,0 +1,547 @@
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+    <meta name="color-scheme" content="light dark" />
+    <link rel="icon" href="data:," />
+    <title>Josh — Portafolio de proyectos</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Archivo:wght@400;500;600;700;800&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet" />
+    <style>
+      button, [role="button"], select, summary, input:not([type="checkbox"], [type="radio"]) { min-height: 2rem; }
+      a.chip-btn, .filter-btn { min-height: 2.25rem; }
+    </style>
+    <style>
+      :root {
+        --bg: #f4f5f0;
+        --bg-raise: #ffffff;
+        --ink: #16181d;
+        --ink-soft: #454a54;
+        --ink-faint: #6d727c;
+        --line: #d9dcd2;
+        --accent: #1d7a4f;
+        --accent-ink: #ffffff;
+        --accent-soft: #e2f0e7;
+        --amber: #b97e10;
+        --amber-soft: #f7ecd2;
+        --tile: #16181d;
+        --tile-ink: #c9f27e;
+        --shadow: 0 1px 2px rgba(22,24,29,.06), 0 8px 24px rgba(22,24,29,.06);
+      }
+      @media (prefers-color-scheme: dark) {
+        :root {
+          --bg: #101216;
+          --bg-raise: #171a1f;
+          --ink: #eceee8;
+          --ink-soft: #b6bbc0;
+          --ink-faint: #878d94;
+          --line: #262b31;
+          --accent: #4cc38a;
+          --accent-ink: #0c1510;
+          --accent-soft: #173325;
+          --amber: #e0aa3e;
+          --amber-soft: #33270e;
+          --tile: #1d2126;
+          --tile-ink: #c9f27e;
+          --shadow: 0 1px 2px rgba(0,0,0,.4), 0 8px 24px rgba(0,0,0,.35);
+        }
+      }
+      * { box-sizing: border-box; }
+      html { scroll-behavior: smooth; }
+      body {
+        margin: 0;
+        background: var(--bg);
+        color: var(--ink);
+        font-family: "Archivo", system-ui, -apple-system, "Segoe UI", sans-serif;
+        line-height: 1.55;
+        -webkit-font-smoothing: antialiased;
+      }
+      .mono { font-family: "IBM Plex Mono", ui-monospace, SFMono-Regular, Menlo, monospace; }
+      .wrap { max-width: 1080px; margin: 0 auto; padding: 0 20px; }
+
+      /* ---------- Hero ---------- */
+      header.hero { padding: 56px 0 8px; }
+      .hero-top {
+        display: flex; flex-wrap: wrap; gap: 28px; align-items: flex-start;
+      }
+      .avatar-tile {
+        width: 92px; height: 92px; flex: 0 0 auto;
+        background: var(--tile); color: var(--tile-ink);
+        border-radius: 14px;
+        display: flex; align-items: center; justify-content: center;
+        font-family: "IBM Plex Mono", monospace; font-weight: 600; font-size: 2rem;
+        letter-spacing: -0.02em;
+        box-shadow: var(--shadow);
+      }
+      .hero-main { flex: 1 1 320px; min-width: 260px; }
+      .hero-main h1 {
+        margin: 0 0 4px; font-size: clamp(2rem, 5.5vw, 3.1rem);
+        font-weight: 800; letter-spacing: -0.03em; line-height: 1.05;
+      }
+      .hero-role {
+        margin: 0 0 14px; font-size: clamp(1.05rem, 2.6vw, 1.3rem);
+        font-weight: 600; color: var(--accent);
+      }
+      .hero-bio { margin: 0 0 18px; color: var(--ink-soft); max-width: 62ch; font-size: 1rem; }
+      .hero-meta {
+        display: flex; flex-wrap: wrap; gap: 8px 18px; margin: 0 0 20px;
+        color: var(--ink-faint); font-size: .9rem;
+      }
+      .hero-meta span { display: inline-flex; align-items: center; gap: 6px; }
+      .hero-links { display: flex; flex-wrap: wrap; gap: 10px; }
+      .btn {
+        display: inline-flex; align-items: center; gap: 8px;
+        padding: 10px 18px; border-radius: 10px; text-decoration: none;
+        font-weight: 600; font-size: .95rem; min-height: 2.75rem;
+        border: 1px solid var(--line); color: var(--ink); background: var(--bg-raise);
+      }
+      .btn.primary { background: var(--accent); border-color: var(--accent); color: var(--accent-ink); }
+      .btn:active { transform: translateY(1px); }
+
+      .stats {
+        display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px;
+        margin: 36px 0 8px;
+      }
+      .stat {
+        background: var(--bg-raise); border: 1px solid var(--line); border-radius: 12px;
+        padding: 16px 18px; box-shadow: var(--shadow);
+      }
+      .stat b { display: block; font-size: 1.7rem; font-weight: 800; letter-spacing: -0.02em; line-height: 1.1; }
+      .stat span { color: var(--ink-faint); font-size: .85rem; }
+
+      /* ---------- Sections ---------- */
+      section { padding: 40px 0 8px; }
+      .sec-head { display: flex; align-items: baseline; justify-content: space-between; gap: 16px; flex-wrap: wrap; margin-bottom: 6px; }
+      .sec-head h2 { margin: 0; font-size: 1.55rem; font-weight: 800; letter-spacing: -0.02em; }
+      .sec-sub { color: var(--ink-soft); margin: 0 0 20px; max-width: 68ch; }
+
+      .filters { display: flex; flex-wrap: wrap; gap: 8px; margin: 4px 0 22px; }
+      .filter-btn {
+        appearance: none; cursor: pointer;
+        border: 1px solid var(--line); background: var(--bg-raise); color: var(--ink-soft);
+        border-radius: 999px; padding: 8px 16px; font: inherit; font-size: .9rem; font-weight: 600;
+      }
+      .filter-btn[aria-pressed="true"] { background: var(--ink); color: var(--bg); border-color: var(--ink); }
+
+      /* ---------- Project cards ---------- */
+      .grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+      .card {
+        background: var(--bg-raise); border: 1px solid var(--line); border-radius: 14px;
+        box-shadow: var(--shadow); padding: 22px; display: flex; flex-direction: column; gap: 12px;
+      }
+      .card.featured { grid-column: 1 / -1; padding: 26px; }
+      .card-head { display: flex; gap: 16px; align-items: flex-start; }
+      .tile {
+        width: 56px; height: 56px; flex: 0 0 auto; border-radius: 10px;
+        background: var(--tile); color: var(--tile-ink);
+        display: flex; align-items: center; justify-content: center;
+        font-family: "IBM Plex Mono", monospace; font-weight: 600; font-size: 1.15rem;
+      }
+      .card.featured .tile { width: 68px; height: 68px; font-size: 1.4rem; }
+      .card-title { min-width: 0; }
+      .card-title h3 { margin: 0; font-size: 1.25rem; font-weight: 800; letter-spacing: -0.01em; }
+      .card.featured .card-title h3 { font-size: 1.6rem; }
+      .card-kind { color: var(--accent); font-weight: 600; font-size: .9rem; margin: 2px 0 0; }
+      .badge {
+        margin-left: auto; flex: 0 0 auto;
+        background: var(--amber-soft); color: var(--amber);
+        font-size: .75rem; font-weight: 700; padding: 4px 10px; border-radius: 999px;
+        text-transform: uppercase; letter-spacing: .04em;
+      }
+      .card p.desc { margin: 0; color: var(--ink-soft); }
+      .card.featured p.desc { font-size: 1.03rem; }
+      .points { margin: 0; padding: 0; list-style: none; display: grid; gap: 7px; }
+      .points li { padding-left: 20px; position: relative; color: var(--ink-soft); font-size: .94rem; }
+      .points li::before {
+        content: ""; position: absolute; left: 2px; top: .52em;
+        width: 7px; height: 7px; border-radius: 2px; background: var(--accent);
+      }
+      .points li b { color: var(--ink); font-weight: 600; }
+      .chips { display: flex; flex-wrap: wrap; gap: 6px; }
+      .chip {
+        font-family: "IBM Plex Mono", monospace; font-size: .78rem;
+        background: var(--accent-soft); color: var(--accent);
+        padding: 4px 9px; border-radius: 6px; font-weight: 500;
+      }
+      .card-foot {
+        margin-top: auto; padding-top: 14px; border-top: 1px solid var(--line);
+        display: flex; flex-wrap: wrap; gap: 8px 16px; align-items: center;
+        font-size: .85rem; color: var(--ink-faint);
+      }
+      .card-foot .spacer { flex: 1; }
+      .repo-link {
+        color: var(--accent); font-weight: 600; text-decoration: none;
+        display: inline-flex; align-items: center; gap: 6px; padding: 6px 2px; min-height: 2rem;
+      }
+      .repo-link:hover { text-decoration: underline; }
+      .hidden-card { display: none; }
+
+      /* ---------- In progress ---------- */
+      .wip-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+      .wip {
+        border: 1px dashed var(--line); border-radius: 14px; padding: 22px;
+        background: transparent;
+      }
+      .wip h3 { margin: 0 0 2px; font-size: 1.2rem; font-weight: 800; }
+      .wip .card-kind { margin-bottom: 10px; }
+      .wip p { margin: 0 0 12px; color: var(--ink-soft); font-size: .95rem; }
+      .wip .status {
+        display: inline-block; font-size: .78rem; font-weight: 700; letter-spacing: .04em;
+        text-transform: uppercase; color: var(--amber); background: var(--amber-soft);
+        padding: 4px 10px; border-radius: 999px; margin-bottom: 12px;
+      }
+
+      /* ---------- Stack ---------- */
+      .stack-groups { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
+      .stack-group { background: var(--bg-raise); border: 1px solid var(--line); border-radius: 14px; padding: 20px; box-shadow: var(--shadow); }
+      .stack-group h3 { margin: 0 0 12px; font-size: 1rem; font-weight: 700; }
+      .stack-group .chips .chip { background: var(--bg); color: var(--ink-soft); border: 1px solid var(--line); }
+
+      footer {
+        margin-top: 48px; padding: 26px 0 40px; border-top: 1px solid var(--line);
+        color: var(--ink-faint); font-size: .88rem;
+        display: flex; flex-wrap: wrap; gap: 8px 20px; justify-content: space-between;
+      }
+      footer a { color: var(--accent); text-decoration: none; font-weight: 600; }
+      footer a:hover { text-decoration: underline; }
+
+      @media (max-width: 760px) {
+        .grid, .wip-grid { grid-template-columns: 1fr; }
+        .stats { grid-template-columns: 1fr 1fr; }
+        .stack-groups { grid-template-columns: 1fr; }
+        header.hero { padding-top: 36px; }
+        .avatar-tile { width: 72px; height: 72px; font-size: 1.6rem; }
+      }
+      @media (prefers-reduced-motion: reduce) {
+        html { scroll-behavior: auto; }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="wrap">
+
+      <header class="hero">
+        <div class="hero-top">
+          <div class="avatar-tile" aria-hidden="true">&gt;_</div>
+          <div class="hero-main">
+            <h1>Josh Arriaga</h1>
+            <p class="hero-role">Desarrollador de software — backend &amp; full-stack</p>
+            <p class="hero-bio">
+              Soy Roberth Joshua Arriaga Mejía (<b>Josh</b>), estudiante universitario y desarrollador
+              en Tegucigalpa, Honduras. Construyo sistemas completos: APIs con arquitectura limpia,
+              aplicaciones en tiempo real, puntos de venta y herramientas que resuelven problemas
+              concretos. Me importa la precisión técnica: transacciones seguras, pruebas que pasan
+              y documentación que otra persona pueda retomar.
+            </p>
+            <p class="hero-meta">
+              <span>📍 Tegucigalpa, Honduras</span>
+              <span>🎓 Universidad José Cecilio del Valle (UJCV)</span>
+              <span class="mono">github.com/WhereIsJoshhh</span>
+            </p>
+            <div class="hero-links">
+              <a class="btn primary" href="https://github.com/WhereIsJoshhh" target="_blank" rel="noopener">Ver GitHub ↗</a>
+              <a class="btn" href="https://doomerplace.vercel.app" target="_blank" rel="noopener">DoomerPlace en vivo ↗</a>
+            </div>
+          </div>
+        </div>
+
+        <div class="stats" role="list" aria-label="Resumen">
+          <div class="stat" role="listitem"><b>5</b><span>repositorios públicos propios</span></div>
+          <div class="stat" role="listitem"><b>2021</b><span>en GitHub desde</span></div>
+          <div class="stat" role="listitem"><b>4</b><span>lenguajes en producción: TS, Python, JS, PHP</span></div>
+          <div class="stat" role="listitem"><b>103</b><span>pruebas pasando en DoomerPlace</span></div>
+        </div>
+      </header>
+
+      <main>
+        <section aria-labelledby="proyectos">
+          <div class="sec-head">
+            <h2 id="proyectos">Proyectos de GitHub</h2>
+          </div>
+          <p class="sec-sub">
+            Una muestra de mi trabajo público: qué es cada proyecto, qué problema resuelve
+            y con qué está construido. Todos los datos salen de los repositorios mismos.
+          </p>
+
+          <div class="filters" role="group" aria-label="Filtrar proyectos">
+            <button class="filter-btn" type="button" data-filter="all" aria-pressed="true">Todos</button>
+            <button class="filter-btn" type="button" data-filter="backend" aria-pressed="false">Backend</button>
+            <button class="filter-btn" type="button" data-filter="fullstack" aria-pressed="false">Full-stack</button>
+            <button class="filter-btn" type="button" data-filter="tiempo-real" aria-pressed="false">Tiempo real</button>
+            <button class="filter-btn" type="button" data-filter="herramienta" aria-pressed="false">Herramientas</button>
+          </div>
+
+          <div class="grid" id="project-grid">
+
+            <!-- DoomerPlace -->
+            <article class="card featured" data-tags="backend fullstack">
+              <div class="card-head">
+                <div class="tile" aria-hidden="true">DP</div>
+                <div class="card-title">
+                  <h3>DoomerPlace</h3>
+                  <p class="card-kind">Marketplace multi-vendedor · Backend empresarial + tienda web</p>
+                </div>
+                <span class="badge">Destacado</span>
+              </div>
+              <p class="desc">
+                Un marketplace donde varias tiendas venden en una sola plataforma. El backend está
+                diseñado con Clean Architecture y Domain-Driven Design, organizado en
+                <b>14 dominios de negocio</b>, y pensado para que el dinero y el inventario nunca
+                queden en un estado inconsistente: cada decisión financiera del sistema deja un
+                registro inmutable.
+              </p>
+              <ul class="points">
+                <li><b>Pedidos divididos (split orders):</b> un solo checkout se separa automáticamente en un subpedido por tienda, con la comisión de la plataforma deducida en tiempo real.</li>
+                <li><b>Custodia de fondos (escrow):</b> el dinero del vendedor queda pendiente hasta confirmar la entrega; solo entonces pasa a saldo disponible para desembolso.</li>
+                <li><b>Sin sobreventas:</b> reserva de stock con bloqueos distribuidos (Redlock) y TTL estricto de 15 minutos durante el checkout.</li>
+                <li><b>Idempotencia estricta:</b> ni una orden ni un webhook de pago pueden cobrarse o abonarse dos veces.</li>
+                <li><b>Snapshots contables:</b> cada ítem guarda el precio, costo e impuestos exactos del momento de la compra; cambiar el catálogo nunca altera el historial.</li>
+                <li><b>103 pruebas unitarias y e2e pasando</b>, con documentación Swagger de la API.</li>
+              </ul>
+              <div class="chips">
+                <span class="chip">NestJS 10</span><span class="chip">TypeScript</span>
+                <span class="chip">Prisma</span><span class="chip">PostgreSQL</span>
+                <span class="chip">Next.js</span><span class="chip">Docker</span>
+              </div>
+              <div class="card-foot">
+                <span>★ 1</span><span>Creado: nov 2026</span><span>Actualizado: 13 nov 2026</span>
+                <span class="spacer"></span>
+                <a class="repo-link" href="https://doomerplace.vercel.app" target="_blank" rel="noopener">Sitio en vivo ↗</a>
+                <a class="repo-link" href="https://github.com/WhereIsJoshhh/DoomerPlace" target="_blank" rel="noopener">Repositorio ↗</a>
+              </div>
+            </article>
+
+            <!-- DoomerPOS -->
+            <article class="card" data-tags="fullstack backend">
+              <div class="card-head">
+                <div class="tile" aria-hidden="true">POS</div>
+                <div class="card-title">
+                  <h3>DoomerPOS</h3>
+                  <p class="card-kind">Punto de venta para restaurantes · v4.0</p>
+                </div>
+              </div>
+              <p class="desc">
+                Sistema POS universitario avanzado para restaurantes, cafeterías y food trucks:
+                centraliza la operación diaria desde que se toma el pedido hasta el cierre
+                financiero del turno, con trazabilidad completa de quién hizo qué.
+              </p>
+              <ul class="points">
+                <li><b>Cocina en pantalla (KDS):</b> pedidos por estado y prioridad, con control de mesas visual.</li>
+                <li><b>Caja con arqueo:</b> apertura de turno, movimientos, ingresos/egresos y cierre cuadrado.</li>
+                <li><b>Inventario con alertas</b> de stock mínimo, compras a proveedores y control de mermas.</li>
+                <li><b>Seguridad por roles:</b> contraseñas cifradas, permisos por rol y bitácora de acciones sensibles.</li>
+                <li><b>Reportes gerenciales</b> por fecha: ventas, métodos de pago, productos más vendidos y más.</li>
+              </ul>
+              <div class="chips">
+                <span class="chip">Python 3</span><span class="chip">Flask 3</span>
+                <span class="chip">SQLAlchemy</span><span class="chip">SQLite</span>
+                <span class="chip">Jinja2</span>
+              </div>
+              <div class="card-foot">
+                <span>★ 2</span><span>Actualizado: oct 2026</span>
+                <span class="spacer"></span>
+                <a class="repo-link" href="https://github.com/WhereIsJoshhh/DoomerPOS" target="_blank" rel="noopener">Repositorio ↗</a>
+              </div>
+            </article>
+
+            <!-- Gambling-V1 -->
+            <article class="card" data-tags="fullstack tiempo-real">
+              <div class="card-head">
+                <div class="tile" aria-hidden="true">🎲</div>
+                <div class="card-title">
+                  <h3>Gambling-V1</h3>
+                  <p class="card-kind">Simulador del juego «crash» · Multijugador en tiempo real</p>
+                </div>
+              </div>
+              <p class="desc">
+                Recreación del juego de casino «crash»: apuestas tu saldo, el multiplicador sube
+                desde 1.00× y retiras antes de que se estrelle — o lo pierdes todo. Usa los mismos
+                algoritmos de probabilidad que los casinos reales, con su ventaja de la casa del 3%.
+                Es un simulador: no hay dinero real.
+              </p>
+              <ul class="points">
+                <li><b>Tiempo real con Socket.io:</b> tabla de apuestas en vivo, chat entre jugadores y gráfica del multiplicador al momento.</li>
+                <li><b>Historial de partidas:</b> últimos 25 resultados y rachas por encima/debajo de 2.00×.</li>
+                <li><b>Cuentas seguras:</b> registro y login con Passport y contraseñas con hash bcrypt; las sesiones persisten en MongoDB.</li>
+                <li>Actualizado en 2026 a React 18 y Mongoose 8, con el arreglo de seguridad que dejó de exponer el hash de contraseña en la API.</li>
+              </ul>
+              <div class="chips">
+                <span class="chip">React 18</span><span class="chip">Express</span>
+                <span class="chip">Socket.io</span><span class="chip">MongoDB</span>
+                <span class="chip">Chart.js</span>
+              </div>
+              <div class="card-foot">
+                <span>Su primer juego</span><span>Actualizado: 14 nov 2026</span>
+                <span class="spacer"></span>
+                <a class="repo-link" href="https://github.com/WhereIsJoshhh/Gambling-V1" target="_blank" rel="noopener">Repositorio ↗</a>
+              </div>
+            </article>
+
+            <!-- SpotySplitter -->
+            <article class="card" data-tags="herramienta backend">
+              <div class="card-head">
+                <div class="tile" aria-hidden="true">♫</div>
+                <div class="card-title">
+                  <h3>Doomer Music Splitter</h3>
+                  <p class="card-kind">Herramienta web local · API de Spotify</p>
+                </div>
+              </div>
+              <p class="desc">
+                ¿Una playlist de Spotify gigante que quieres ordenar en partes? Esta app web local
+                la divide en varias playlists privadas del tamaño que elijas (200 por defecto),
+                sin tocar la original.
+              </p>
+              <ul class="points">
+                <li>Lee la playlist por <b>páginas de 50</b> canciones y crea las nuevas en <b>lotes de hasta 100</b>, como exige la API de Spotify.</li>
+                <li>Autenticación OAuth contra tu propia app de Spotify Developer; corre 100% en local.</li>
+                <li>La playlist original <b>nunca se edita ni se elimina</b>.</li>
+              </ul>
+              <div class="chips">
+                <span class="chip">Python 3.11</span><span class="chip">Flask</span>
+                <span class="chip">Spotify API</span><span class="chip">OAuth</span>
+              </div>
+              <div class="card-foot">
+                <span>Repo: Doomer-SpotySplitter</span><span>Creado: nov 2026</span>
+                <span class="spacer"></span>
+                <a class="repo-link" href="https://github.com/WhereIsJoshhh/Doomer-SpotySplitter" target="_blank" rel="noopener">Repositorio ↗</a>
+              </div>
+            </article>
+
+            <!-- proyectoweb -->
+            <article class="card" data-tags="fullstack">
+              <div class="card-head">
+                <div class="tile" aria-hidden="true">&lt;/&gt;</div>
+                <div class="card-title">
+                  <h3>proyectoweb.github.io</h3>
+                  <p class="card-kind">Primer proyecto web publicado · GitHub Pages</p>
+                </div>
+              </div>
+              <p class="desc">
+                Mi primer sitio web publicado en GitHub, de agosto de 2024: un proyecto web en PHP
+                desplegado con GitHub Pages. Lo conservo en el portafolio porque marca el punto de
+                partida — de esta página a marketplaces con arquitectura por dominios hay dos años
+                de diferencia.
+              </p>
+              <div class="chips">
+                <span class="chip">PHP</span><span class="chip">HTML/CSS</span>
+                <span class="chip">GitHub Pages</span>
+              </div>
+              <div class="card-foot">
+                <span>Publicado: ago 2024</span>
+                <span class="spacer"></span>
+                <a class="repo-link" href="https://github.com/WhereIsJoshhh/proyectoweb.github.io" target="_blank" rel="noopener">Repositorio ↗</a>
+              </div>
+            </article>
+
+          </div>
+          <p id="no-results" class="sec-sub" hidden>Ningún proyecto coincide con ese filtro.</p>
+        </section>
+
+        <section aria-labelledby="en-curso">
+          <div class="sec-head">
+            <h2 id="en-curso">En desarrollo</h2>
+          </div>
+          <p class="sec-sub">Proyectos más grandes que estoy construyendo fuera de los repositorios públicos.</p>
+          <div class="wip-grid">
+            <div class="wip">
+              <span class="status">En curso</span>
+              <h3>DoomerAcademy</h3>
+              <p class="card-kind">Plataforma educativa de programación</p>
+              <p>
+                Una plataforma para aprender a programar con cursos, ejercicios ejecutables y
+                seguimiento de progreso. El catálogo planeado abarca 6 cursos, 30 módulos y
+                150 lecciones (C#, Python, Node.js, Rust, SQL y JavaScript), con un motor que
+                ejecuta el código del estudiante de forma aislada.
+              </p>
+              <div class="chips">
+                <span class="chip">NestJS</span><span class="chip">Prisma</span>
+                <span class="chip">PostgreSQL</span><span class="chip">Redis + BullMQ</span>
+                <span class="chip">Docker</span>
+              </div>
+            </div>
+            <div class="wip">
+              <span class="status">En curso</span>
+              <h3>DoomerFy</h3>
+              <p class="card-kind">App Android de música en streaming</p>
+              <p>
+                Mi propia app de música para Android: streaming con reproducción en segundo plano
+                y almacenamiento offline, construida en Kotlin sobre Media3/ExoPlayer, con marca
+                y experiencia propias.
+              </p>
+              <div class="chips">
+                <span class="chip">Kotlin</span><span class="chip">Media3</span>
+                <span class="chip">ExoPlayer</span><span class="chip">Android</span>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <section aria-labelledby="stack">
+          <div class="sec-head">
+            <h2 id="stack">Tecnologías</h2>
+          </div>
+          <p class="sec-sub">Lo que uso según el problema: backend y arquitectura es donde más peso tengo.</p>
+          <div class="stack-groups">
+            <div class="stack-group">
+              <h3>Lenguajes</h3>
+              <div class="chips">
+                <span class="chip">TypeScript</span><span class="chip">JavaScript</span>
+                <span class="chip">Python</span><span class="chip">C#</span>
+                <span class="chip">Java</span><span class="chip">C++</span>
+                <span class="chip">PHP</span><span class="chip">Kotlin</span>
+                <span class="chip">Rust</span><span class="chip">SQL</span>
+              </div>
+            </div>
+            <div class="stack-group">
+              <h3>Backend y datos</h3>
+              <div class="chips">
+                <span class="chip">NestJS</span><span class="chip">Express</span>
+                <span class="chip">Flask</span><span class="chip">Prisma</span>
+                <span class="chip">PostgreSQL</span><span class="chip">MongoDB</span>
+                <span class="chip">Redis / BullMQ</span><span class="chip">Socket.io</span>
+              </div>
+            </div>
+            <div class="stack-group">
+              <h3>Frontend y plataforma</h3>
+              <div class="chips">
+                <span class="chip">Next.js</span><span class="chip">React</span>
+                <span class="chip">Android (Kotlin)</span><span class="chip">Docker</span>
+                <span class="chip">CI/CD</span><span class="chip">Git / GitHub</span>
+                <span class="chip">Godot</span>
+              </div>
+            </div>
+          </div>
+        </section>
+      </main>
+
+      <footer>
+        <span>Josh Arriaga · Tegucigalpa, Honduras · Datos de los repositorios verificados en GitHub el 24 de noviembre de 2026.</span>
+        <span><a href="https://github.com/WhereIsJoshhh" target="_blank" rel="noopener">github.com/WhereIsJoshhh ↗</a></span>
+      </footer>
+    </div>
+
+    <script>
+      (function () {
+        var buttons = Array.prototype.slice.call(document.querySelectorAll(".filter-btn"));
+        var cards = Array.prototype.slice.call(document.querySelectorAll("#project-grid .card"));
+        var empty = document.getElementById("no-results");
+        buttons.forEach(function (btn) {
+          btn.addEventListener("click", function () {
+            buttons.forEach(function (b) { b.setAttribute("aria-pressed", "false"); });
+            btn.setAttribute("aria-pressed", "true");
+            var f = btn.getAttribute("data-filter");
+            var visible = 0;
+            cards.forEach(function (card) {
+              var show = f === "all" || (card.getAttribute("data-tags") || "").split(" ").indexOf(f) !== -1;
+              card.classList.toggle("hidden-card", !show);
+              if (show) visible++;
+            });
+            empty.hidden = visible !== 0;
+          });
+        });
+      })();
+    </script>
+  </body>
+</html>
